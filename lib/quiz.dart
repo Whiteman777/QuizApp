@@ -1,44 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:quizapp/questions_screen.dart';
 import 'package:quizapp/start_screen.dart';
-import 'package:quizapp/question_screen.dart';
-
-
+import 'package:quizapp/theme.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
 
   @override
-    State<Quiz> createState(){
-      return _QuizState();
-    }
+  State<Quiz> createState() => _QuizState();
 }
 
-class _QuizState extends State<Quiz>{
-  Widget activeScreen = StartScreen();
+class _QuizState extends State<Quiz> {
+  var activeScreen = 'start_screen';
 
-  
-  void switchState(){
-    setState((){
-      activeScreen = const QuestionScreen();
+  void switchScreen() {
+    setState(() {
+      activeScreen = 'questions_screen';
     });
   }
 
   @override
-  Widget build(context){
+  Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 80, 44, 142),
-                Color.fromARGB(255, 47, 117, 50),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child:  activeScreen,
+        body: BackgroundTheme(
+          activeScreen == 'start_screen'
+              ? StartScreen(switchScreen)
+              : const QuestionsScreen(),
         ),
       ),
     );
