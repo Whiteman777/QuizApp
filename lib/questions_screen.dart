@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:quizapp/answer_button.dart';
 import 'package:quizapp/data/questions.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:quizapp/models/quiz_questions.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({super.key});
+  const QuestionsScreen({required this.results,required this.selectedAnswers,super.key});
+
+  final List<String> selectedAnswers;
+  final void Function() results;
 
   @override
   State<QuestionsScreen> createState() => _QuestionsScreenState();
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  late var currentQuestion;
+  late QuizQuestion currentQuestion;
   int counter = 0;
   @override
   void initState() {
@@ -18,11 +23,14 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     currentQuestion = questions[counter];
   }
 
-  void NextQQuestion() {
+  void answerQuestion() {
     setState(() {
       counter++;
       if (counter < questions.length) {
         currentQuestion = questions[counter];
+      }
+      else if(counter == questions.length){
+        widget.results();
       }
     });
   }
@@ -38,8 +46,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           children: [
             Text(
               currentQuestion.text,
-              style: TextStyle(
-                fontSize: 15,
+              style: GoogleFonts.lato(
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -50,7 +58,14 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
             ),
             //you can also use map function here too, to generate list of widgets
             for (var answers in currentQuestion.getShuffledAnswers())
-              AnswerButton(answerText: answers, onTap: NextQQuestion),
+              AnswerButton(answerText: answers, onTap: (){
+                widget.selectedAnswers.add(answers);
+                answerQuestion();
+                
+                for(var i in currentQuestion.getShuffledAnswers()){
+
+                }
+              }),
           ],
         ),
       ),

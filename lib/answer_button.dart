@@ -4,11 +4,12 @@ class AnswerButton extends StatelessWidget {
   const AnswerButton({
     required this.answerText,
     required this.onTap,
+    this.results,
     super.key,
   });
-
   final String answerText;
   final void Function()? onTap;
+  final void Function()? results;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,14 @@ class AnswerButton extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: const Color.fromARGB(159, 0, 0, 0),
         //padding: const EdgeInsets.symmetric(
-          //vertical: 10,
-          //horizontal: 20,
+        //vertical: 10,
+        //horizontal: 20,
         //),
       ),
-      child: Text(answerText),
+      child: Text(
+        answerText,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
