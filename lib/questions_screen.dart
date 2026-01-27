@@ -5,18 +5,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/models/quiz_questions.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({required this.results,required this.selectedAnswers,super.key});
+  const QuestionsScreen({
+    required this.selectedAnswers,
+    super.key,
+  });
 
-  final List<String> selectedAnswers;
-  final void Function() results;
+  final void Function(String) selectedAnswers;
 
   @override
   State<QuestionsScreen> createState() => _QuestionsScreenState();
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
+  var counter = 0;
   late QuizQuestion currentQuestion;
-  int counter = 0;
   @override
   void initState() {
     super.initState();
@@ -28,9 +30,6 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
       counter++;
       if (counter < questions.length) {
         currentQuestion = questions[counter];
-      }
-      else if(counter == questions.length){
-        widget.results();
       }
     });
   }
@@ -58,14 +57,13 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
             ),
             //you can also use map function here too, to generate list of widgets
             for (var answers in currentQuestion.getShuffledAnswers())
-              AnswerButton(answerText: answers, onTap: (){
-                widget.selectedAnswers.add(answers);
-                answerQuestion();
-                
-                for(var i in currentQuestion.getShuffledAnswers()){
-
-                }
-              }),
+              AnswerButton(
+                answerText: answers,
+                onTap: () {
+                  widget.selectedAnswers(answers);
+                  answerQuestion();
+                },
+              ),
           ],
         ),
       ),
