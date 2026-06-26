@@ -6,7 +6,7 @@ A clean, well-architected Flutter quiz application demonstrating state managemen
 
 ### 📱 Try the App
 
-**[Download Flutter Quiz v1.0.0 (APK)](https://drive.google.com/file/d/1ycCw5I4NMCMnwhLJJTkton4AmF8RZ8Nl/view?usp=sharing)**
+**[Download Flutter Quiz v1.5.0 (APK)](https://drive.google.com/file/d/1-HUzYAiNJFnCIN5hGqZ9m_Jy96VuwDMn/view?usp=sharing)**
 
 **Requirements:**
 - Android 5.0 (Lollipop) or higher

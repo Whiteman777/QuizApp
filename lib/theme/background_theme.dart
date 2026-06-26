@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BackgroundTheme extends StatelessWidget {
-  BackgroundTheme(this.x, {super.key});
+  const BackgroundTheme(this.screenContent, {super.key});
 
-  final Widget x;
-  var startAlign = Alignment.topLeft;
-  var endAlign = Alignment.bottomRight;
+  final Widget screenContent;
+  final  startAlign = Alignment.topLeft;
+  final endAlign = Alignment.bottomRight;
 
   @override
   Widget build(context) {
@@ -19,7 +19,7 @@ class BackgroundTheme extends StatelessWidget {
       ),
       height: double.infinity,
       width: double.infinity,
-      child: x,
+      child: screenContent,
     );
   }
 }

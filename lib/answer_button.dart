@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
 class AnswerButton extends StatelessWidget {
+  final String answer;
+  final void Function() onTap;
+
   const AnswerButton({
-    required this.answerText,
-    required this.onTap,
-    this.results,
     super.key,
+    required this.answer,
+    required this.onTap,
   });
-  final String answerText;
-  final void Function()? onTap;
-  final void Function()? results;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        //minimumSize: const Size(200, 40),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromARGB(159, 0, 0, 0),
-        //padding: const EdgeInsets.symmetric(
-        //vertical: 10,
-        //horizontal: 20,
-        //),
-      ),
-      child: Text(
-        answerText,
-        textAlign: TextAlign.center,
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          minimumSize: const Size(double.infinity, 49),
+        ),
+        child: Text(
+          answer,
+          style: GoogleFonts.googleSans(
+            fontSize: 15.5,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

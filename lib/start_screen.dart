@@ -2,42 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen(this.startQuiz, {super.key});
+  final void Function() startScreen;
 
-  final void Function() startQuiz;
+  const StartScreen({
+    super.key,
+    required this.startScreen,
+  });
 
   @override
   Widget build(context) {
     return Center(
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/images/quiz-logo.png',
-            width: 300,
-            color: const Color.fromARGB(110, 255, 255, 255),
+          Opacity(
+            opacity: 0.5,
+            child: Image.asset(
+              "assets/images/quiz-logo.png",
+              width: 300,
+            ),
           ),
-          const SizedBox(
-            height: 80,
+          SizedBox(
+            height: 30,
           ),
           Text(
             "Learn Flutter the fun way!",
-            style: GoogleFonts.lato(
-              fontSize: 24,
-              color: Colors.white,
+            style: GoogleFonts.googleSans(
+              color: Color(0xBFFFFFFF),
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 30,
           ),
           OutlinedButton.icon(
-            onPressed: startQuiz,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.white,
+            onPressed: startScreen,
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Color(0xBFFFFFFF),
             ),
-            label: Text("💀"),
-            icon: Text("Start Quiz"),
+            iconAlignment: IconAlignment.end,
+            label: Text(
+              "Start Quiz",
+              style: GoogleFonts.googleSans(
+                color: Color(0xBFFFFFFF),
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+              ),
+            ),
           ),
         ],
       ),

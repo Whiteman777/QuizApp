@@ -2,68 +2,87 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsSummary extends StatelessWidget {
-  QuestionsSummary(this.summaryData, {super.key});
+  final List<Map<String, Object>> summary;
 
-  final List<Map<String, Object>> summaryData;
+  const QuestionsSummary({
+    super.key,
+    required this.summary,
+  });
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
+      height: 325,
       child: SingleChildScrollView(
         child: Column(
-          children: summaryData.map((data) {
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
+          children: summary.map(
+            (data) {
+              return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: data['correct_answer'] == data['selected_answer']
-                        ? const Color.fromARGB(219, 76, 175, 79)
-                        : const Color.fromARGB(241, 228, 17, 2),
+                      //you can also use borderRadius
+                      color: data["user_answer"] == data["correct_answer"]
+                          ? Color(0xFF00E676)
+                          : Color(0xFFFF5252),
                     ),
-                    child: Center(
-                      child: Text(
-                        ((data['question_index'] as int) + 1).toString(),
+                    child: Text(
+                      ((data["question_index"] as int) + 1).toString(),
+                      style: GoogleFonts.googleSans(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 15,
+                  ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          data['question'] as String,
-                          style: GoogleFonts.lato(
-                            fontSize: 18,
+                          data["question"] as String,
+                          style: GoogleFonts.googleSans(
                             fontWeight: FontWeight.bold,
+                            fontSize: 19.78,
                             color: Colors.white,
                           ),
-                          textAlign: TextAlign.left,
                         ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Your Answer: ${data['selected_answer']}',
-                          style: GoogleFonts.lato(color: Colors.black),
-                          textAlign: TextAlign.left,
+                        const SizedBox(
+                          height: 5,
                         ),
                         Text(
-                          'Correct Answer: ${data['correct_answer']}',
-                          style: GoogleFonts.lato(color: const Color.fromARGB(255, 30, 174, 35)),
-                          textAlign: TextAlign.left,
+                          "Your Answer: ${data["user_answer"] as String}",
+                          style: GoogleFonts.googleSans(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: data["user_answer"] == data["correct_answer"]
+                                ? Color(0xFF00E676)
+                                : Color(0xFFFF5252),
+                          ),
+                        ),
+                        Text(
+                          "Correct Answer: ${data["correct_answer"] as String}",
+                          style: GoogleFonts.googleSans(
+                            color: Color(0xFF00E676),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
                         ),
                       ],
                     ),
                   ),
                 ],
-              ),
-            );
-          }).toList(),
+              );
+            },
+          ).toList(),
         ),
       ),
     );

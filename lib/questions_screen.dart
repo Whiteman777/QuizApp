@@ -1,69 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/answer_button.dart';
 import 'package:quizapp/data/questions.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:quizapp/models/quiz_questions.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({
-    required this.selectedAnswers,
-    super.key,
-  });
+  final void Function(String answer) onSelectedAnswer;
 
-  final void Function(String) selectedAnswers;
+  const QuestionsScreen({super.key, required this.onSelectedAnswer});
 
   @override
-  State<QuestionsScreen> createState() => _QuestionsScreenState();
+  State<QuestionsScreen> createState() {
+    return _QuestionsScreenState();
+  }
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  var counter = 0;
-  late QuizQuestion currentQuestion;
-  @override
-  void initState() {
-    super.initState();
-    currentQuestion = questions[counter];
-  }
+  var currentQuestionIndex = 0;
 
-  void answerQuestion() {
+  void answerQuestion(String selectedAnswer) {
+    widget.onSelectedAnswer(selectedAnswer);
     setState(() {
-      counter++;
-      if (counter < questions.length) {
-        currentQuestion = questions[counter];
-      }
+      currentQuestionIndex++;
     });
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
+    var currentQuestion = questions[currentQuestionIndex];
     return Center(
       child: Container(
         margin: const EdgeInsets.all(40),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              currentQuestion.text,
-              style: GoogleFonts.lato(
-                fontSize: 24,
+              currentQuestion.question,
+              style: GoogleFonts.googleSans(
+                color: Colors.white,
+                fontSize: 23,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
-            //you can also use map function here too, to generate list of widgets
-            for (var answers in currentQuestion.getShuffledAnswers())
-              AnswerButton(
-                answerText: answers,
-                onTap: () {
-                  widget.selectedAnswers(answers);
-                  answerQuestion();
-                },
-              ),
+            ...currentQuestion.shuffledAnswers.map(
+              (answer) {
+                return AnswerButton(
+                  answer: answer,
+                  onTap: () {
+                    answerQuestion(answer);
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
